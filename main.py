@@ -5,6 +5,10 @@ root.title("Calculator")
 root.geometry("500x400")
 root.configure(background="Black")
 
+#change icon
+icon = tk.PhotoImage(file="icon.png")
+root.iconphoto(False, icon)
+
 def button_press(num):
     global equation_text
 
