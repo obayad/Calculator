@@ -2,7 +2,8 @@ import tkinter as tk
 
 root = tk.Tk()
 root.title("Calculator")
-root.geometry("500x480")
+root.geometry("500x400")
+root.configure(background="Black")
 
 def button_press(num):
     global equation_text
@@ -13,14 +14,20 @@ def button_press(num):
 def button_equal():
     global equation_text
 
-    if "^" in equation_text:
-        equation_text=equation_text.replace("^", "**")
-        total = str(eval(equation_text))
-        equation_label.set(total)
-    else:
-        total = str(eval(equation_text))
-        equation_label.set(total)
+    try:
+        if "^" in equation_text:
+            equation_text=equation_text.replace("^", "**")
+            total = str(eval(equation_text))
+            equation_label.set(total)
+        else:
+            total = str(eval(equation_text))
+            equation_label.set(total)
 
+    except SyntaxError:
+        equation_label.set("Syntax Error! 😔")
+
+    except ZeroDivisionError:
+        equation_label.set("❌ Error!")
     equation_text = total
 
 def button_clear():
@@ -36,7 +43,7 @@ label = tk.Label(root, textvariable=equation_label,font=("Arial",20), width=50, 
 label.pack()
 
 
-buttonFrame = tk.Frame(root)
+buttonFrame = tk.Frame(root, bg="Black")
 
 buttonFrame.columnconfigure(0, weight=1)
 buttonFrame.columnconfigure(1, weight=1)
@@ -67,28 +74,28 @@ btn0.grid(row=3, column=0, sticky=tk.W+tk.E, padx=4,pady=4)
 btn_point = tk.Button(buttonFrame, text=".", font=("Arial",14), command=lambda:button_press("."))
 btn_point.grid(row=3, column=1, sticky="nsew", padx=4, pady=4)
 
-btn_equal = tk.Button(buttonFrame, text="=", font=("Arial",14), command=button_equal)
-btn_equal.grid(row=3, column=2, sticky="nsew", padx=4, pady=4)
+btn_equal = tk.Button(buttonFrame, text="=", font=("Arial",14), fg="white", bg="Green", command=button_equal)
+btn_equal.grid(row=4, column=2, sticky="nsew", padx=4, pady=4)
 
-btn_sum = tk.Button(buttonFrame, text="+", font=("Arial",14), command=lambda:button_press("+"))
+btn_sum = tk.Button(buttonFrame, text="+", font=("Arial",14), fg="white", bg="Green", command=lambda:button_press("+"))
 btn_sum.grid(row=3, column="3", sticky="nsew", padx=4, pady=4)
-btn_sub = tk.Button(buttonFrame, text="-", font=("Arial",14), command=lambda:button_press("-"))
+btn_sub = tk.Button(buttonFrame, text="-", font=("Arial",14), fg="white", bg="Green", command=lambda:button_press("-"))
 btn_sub.grid(row=2, column="3", sticky="nsew", padx=4, pady=4)
-btn_mul = tk.Button(buttonFrame, text="*", font=("Arial",14), command=lambda:button_press("*"))
+btn_mul = tk.Button(buttonFrame, text="*", font=("Arial",14), fg="white", bg="Green", command=lambda:button_press("*"))
 btn_mul.grid(row=1, column="3", sticky="nsew", padx=4, pady=4)
-btn_div = tk.Button(buttonFrame, text="/", font=("Arial",14), command=lambda:button_press("/"))
+btn_div = tk.Button(buttonFrame, text="/", font=("Arial",14), fg="white", bg="Green", command=lambda:button_press("/"))
 btn_div.grid(row=0, column="3", sticky="nsew", padx=4, pady=4)
 
 btn_power = tk.Button(buttonFrame, text="^", font=("Arial",14), command=lambda:button_press("^"))
-btn_power.grid(row=4, column="2", sticky="nsew", padx=4, pady=4)
+btn_power.grid(row=3, column="2", sticky="nsew", padx=4, pady=4)
 
-btnob = tk.Button(buttonFrame, text="(",font=("Arial",14), command=lambda:button_press("("))
+btnob = tk.Button(buttonFrame, text="(",font=("Arial",14), fg="white", bg="Green", command=lambda:button_press("("))
 btnob.grid(row=4, column=0, sticky=tk.W+tk.E, padx=4,pady=4)
-btncb = tk.Button(buttonFrame, text=")",font=("Arial",14), command=lambda:button_press(")"))
+btncb = tk.Button(buttonFrame, text=")",font=("Arial",14), fg="white", bg="Green", command=lambda:button_press(")"))
 btncb.grid(row=4, column=1, sticky=tk.W+tk.E, padx=4,pady=4)
 
-btnclear = tk.Button(buttonFrame, text="clear", font=("Arial",16), command=button_clear)
-btnclear.grid(row=4,column=3, sticky="nsew")
+btnclear = tk.Button(buttonFrame, text="clear", font=("Arial",16), fg="white", bg="Red", command=button_clear)
+btnclear.grid(row=4,column=3, sticky="nsew", padx=4, pady=4)
 
 buttonFrame.pack(fill="both",padx=20, pady=20)
 
